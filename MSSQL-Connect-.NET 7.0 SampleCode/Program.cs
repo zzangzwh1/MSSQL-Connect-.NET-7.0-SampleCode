@@ -38,10 +38,44 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
 
             #region FindStudent
 
-            string result = BCS.FindStudent("1");
-            Console.WriteLine(result);
+
+            /*   string result = BCS.FindStudent("1");
+               Console.WriteLine(result);*/
 
             #endregion
+
+            #region ModifyStudent
+            /*   bool isModifyStudent = BCS.ModifyStudent("1", "MC", "CHOI", "wcho2@nait.ca");
+               if (isModifyStudent)
+               {
+                   Console.WriteLine("Successfully Modifed!");
+               }
+               else
+               {
+                   Console.WriteLine("Error Occured - FAILED!");
+               }*/
+
+            #endregion
+
+            #region RemoveStudent
+
+          /*  bool isRemoveStudent = BCS.RemoveStudent("8");
+            if (isRemoveStudent)
+            {
+                Console.WriteLine("Succesfully Removed!");
+            }
+            else
+            {
+                Console.WriteLine("Error Occured - FAILED!");
+            }*/
+
+
+            #endregion
+
+            #region FindProgram
+
+            BCS.FindProgram("BAIST");
+            #endregion 
 
 
 

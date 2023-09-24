@@ -12,10 +12,10 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
 {
     public class BCS
     {
-        //global connection string is initialized so it can access to multiple methods
-        public static string connectionString = @"Data Source= dev1.baist.ca; Initial Catalog=wcho2; User ID=wcho2; Password=Whdnjsgur1!;  ";
+        //global connection string is initialized so it can access to multiple methods 
+        public static string connectionString = @"  ";
 
-        #region AddProgram Through CreateProgram Procedure
+        #region CreateProgram
         public static bool CreateProgram(string programCode, string description)
         {
             //Persist Security Info=False; Integrated Security=True; not required 
@@ -46,7 +46,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error Occurs - {ex.Message}");
+                        Console.WriteLine($"Error Occurred - {ex.Message}");
                         return false;
                     }
                     finally
@@ -62,8 +62,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
         }
         #endregion
 
-        #region Add Student using the stored procedure Enroll Student
-
+        #region EnrollStudent
         public static bool EnrollStudent(string studentId, string firstName, string lastName, string email, string programCode)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -86,7 +85,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error Occured - {ex.Message}");
+                        Console.WriteLine($"Error Occurred - {ex.Message}");
                         return false;
 
                     }
@@ -105,6 +104,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
 
         #endregion
 
+        #region FindStudent
         public static string FindStudent(string studentID)
         {
             StringBuilder strings = new StringBuilder();
@@ -137,24 +137,24 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                                 Console.WriteLine();
 
                             }
-                            int maxCount = 0;
-                            while (reader.Read() && maxCount < reader.FieldCount)
+
+                            while (reader.Read())
                             {
 
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    strings.Append(reader[i].ToString());
+                                    strings.Append("\t\t");
 
-                                strings.Append(reader[maxCount].ToString());
-                                strings.Append("\t\t");
-                                maxCount++;
-
+                                }
                             }
+
                         }
-
-
 
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error Occured {ex.Message}");
+                        Console.WriteLine($"Error Occurred {ex.Message}");
                     }
                     finally
                     {
@@ -167,6 +167,129 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
             }
             return strings.ToString();
         }
+        #endregion
 
+        #region ModifyStudent
+        public static bool ModifyStudent(string studentId, string firstName, string lastName, string email)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand("ModifyStudent", conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    try
+                    {
+                        command.Parameters.AddWithValue("@StudentID", studentId);
+                        command.Parameters.AddWithValue("@FirstName", firstName);
+                        command.Parameters.AddWithValue("@LastName", lastName);
+
+                        command.Parameters.AddWithValue("@Email", email);
+                        command.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error Occurred {ex.Message}");
+                        return false;
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+
+
+                }
+            }
+            return true;
+        }
+        #endregion
+
+        #region  RemoveStudent
+        public static bool RemoveStudent(string studentId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand("RemoveStudent", conn))
+                {
+                    try
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@StudentID", studentId);
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error Occurred {ex.Message}");
+                        return false;
+
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+
+
+
+                }
+            }
+            return true;
+        }
+
+        #endregion
+
+        #region FindProgram
+
+        public static void FindProgram(string programCode)
+        {
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand("FindProgram", conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    try
+                    {
+
+                        command.Parameters.AddWithValue("@ProgramCode", programCode);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    Console.Write($"{reader.GetName(i)}\t");
+                                }
+
+                            }
+                            Console.WriteLine();
+                            while (reader.Read())
+                            {
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    Console.Write($"{reader[i]}\t\t");
+                                }
+
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error Occurred {ex.Message}");
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }
+

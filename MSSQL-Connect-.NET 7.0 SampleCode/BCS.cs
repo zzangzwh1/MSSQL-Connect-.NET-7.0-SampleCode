@@ -13,7 +13,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
     public class BCS
     {
         //global connection string is initialized so it can access to multiple methods 
-        public static string connectionString = @"Data Source= dev1.baist.ca; Initial Catalog=wcho2; User ID=wcho2; Password=Whdnjsgur1!; ";
+        public static string connectionString = @"Data Source= ; ";
 
         #region CreateProgram
         public static bool CreateProgram(string programCode, string description)

@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlTypes;
 using Microsoft.Data.SqlClient;
+using System.Data.Common;
 
 namespace MSSQL_Connect_.NET_7._0_SampleCode
 {
     public class BCS
     {
         //global connection string is initialized so it can access to multiple methods
-        private static string connectionString = @"Data Source= dev1.baist.ca; Initial Catalog=wcho2; User ID=wcho2; Password=Whdnjsgur1!;  ";
+        public static string connectionString = @"Data Source= dev1.baist.ca; Initial Catalog=wcho2; User ID=wcho2; Password=Whdnjsgur1!;  ";
 
         #region AddProgram Through CreateProgram Procedure
-        public static bool AddProgram(string programCode, string description)
+        public static bool CreateProgram(string programCode, string description)
         {
             //Persist Security Info=False; Integrated Security=True; not required 
             //for local :Persist Security Info=False; Integrated Security=True
@@ -63,7 +64,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
 
         #region Add Student using the stored procedure Enroll Student
 
-        public static bool AddStudent(string studentId, string firstName, string lastName, string email, string programCode)
+        public static bool EnrollStudent(string studentId, string firstName, string lastName, string email, string programCode)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -104,6 +105,68 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
 
         #endregion
 
+        public static string FindStudent(string studentID)
+        {
+            StringBuilder strings = new StringBuilder();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("FindStudent", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    try
+                    {
+
+                        command.Parameters.AddWithValue("@StudentID", studentID);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    if (i == reader.FieldCount - 2)
+                                    {
+                                        Console.Write($"{reader.GetName(i)}\t\t\t");
+                                    }
+                                    else
+                                    {
+
+                                        Console.Write($"{reader.GetName(i)}\t");
+                                    }
+                                }
+                                Console.WriteLine();
+
+                            }
+                            int maxCount = 0;
+                            while (reader.Read() && maxCount < reader.FieldCount)
+                            {
+
+
+                                strings.Append(reader[maxCount].ToString());
+                                strings.Append("\t\t");
+                                maxCount++;
+
+                            }
+                        }
+
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error Occured {ex.Message}");
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+
+
+
+                }
+            }
+            return strings.ToString();
+        }
 
     }
 }

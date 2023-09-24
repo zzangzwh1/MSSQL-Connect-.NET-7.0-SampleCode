@@ -13,7 +13,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
     public class BCS
     {
         //global connection string is initialized so it can access to multiple methods 
-        public static string connectionString = @"  ";
+        public static string connectionString = @"Data Source= dev1.baist.ca; Initial Catalog=wcho2; User ID=wcho2; Password=Whdnjsgur1!; ";
 
         #region CreateProgram
         public static bool CreateProgram(string programCode, string description)
@@ -135,19 +135,24 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                                     }
                                 }
                                 Console.WriteLine();
-
-                            }
-
-                            while (reader.Read())
-                            {
-
-                                for (int i = 0; i < reader.FieldCount; i++)
+                                while (reader.Read())
                                 {
-                                    strings.Append(reader[i].ToString());
-                                    strings.Append("\t\t");
 
+                                    for (int i = 0; i < reader.FieldCount; i++)
+                                    {
+                                        strings.Append(reader[i].ToString());
+                                        strings.Append("\t\t");
+
+                                    }
                                 }
+
                             }
+                            else
+                            {
+                                Console.WriteLine("No Data Found");
+                            }
+
+                        
 
                         }
 
@@ -263,17 +268,26 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                                 {
                                     Console.Write($"{reader.GetName(i)}\t");
                                 }
+                                Console.WriteLine();
 
-                            }
-                            Console.WriteLine();
-                            while (reader.Read())
-                            {
-                                for (int i = 0; i < reader.FieldCount; i++)
+                                while (reader.Read())
                                 {
-                                    Console.Write($"{reader[i]}\t\t");
+                                    for (int i = 0; i < reader.FieldCount; i++)
+                                    {
+                                        Console.Write($"{reader[i]}\t\t");
+                                    }
+
                                 }
 
                             }
+                            else
+                            {
+                                Console.WriteLine("No data Found.");
+
+                            }
+
+
+
                         }
 
                     }

@@ -13,7 +13,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
     public class BCS
     {
         //global connection string is initialized so it can access to multiple methods 
-        public static string connectionString = @"Data Source= dev1.baist.ca; Initial Catalog=wcho2; User ID=wcho2; Password=Whdnjsgur1!; ";
+        public static string connectionString = @" ";
 
         #region CreateProgram
         public static bool CreateProgram(string programCode, string description)
@@ -58,7 +58,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                 }
             }
             return true;
-            // Console.WriteLine("Success");
+           
         }
         #endregion
 
@@ -124,6 +124,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                             {
                                 for (int i = 0; i < reader.FieldCount; i++)
                                 {
+                                    //if condition added so result output present equally
                                     if (i == reader.FieldCount - 2)
                                     {
                                         Console.Write($"{reader.GetName(i)}\t\t\t");

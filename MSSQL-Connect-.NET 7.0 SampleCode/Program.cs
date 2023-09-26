@@ -75,8 +75,12 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
             #region FindProgram
 
             BCS.FindProgram("BAIST1");
-            #endregion 
+            #endregion
 
+            #region GetStudentByProgram
+            Students.GetStudentsByProgram("BAIST");
+
+            #endregion
 
 
         }

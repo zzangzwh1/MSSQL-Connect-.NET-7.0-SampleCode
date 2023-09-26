@@ -14,6 +14,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
     {
 
         //global connection string is initialized so it can access to multiple methods 
+        public static string connectionString = @"Data Source= ; ";
         public static string connectionString = @" ";
 
        

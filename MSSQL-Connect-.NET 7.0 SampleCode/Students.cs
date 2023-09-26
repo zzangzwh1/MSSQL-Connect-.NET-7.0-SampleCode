@@ -11,6 +11,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
 {
     public class Students
     {
+        #region GetStudentsByProgram
         public static void GetStudentsByProgram(string programCode)
         {
             StringBuilder sBuilder = new StringBuilder();
@@ -72,4 +73,5 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
      
         }
     }
+    #endregion
 }

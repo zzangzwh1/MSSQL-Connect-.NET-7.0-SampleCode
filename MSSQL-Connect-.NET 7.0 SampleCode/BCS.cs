@@ -14,9 +14,8 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
     {
 
         //global connection string is initialized so it can access to multiple methods 
-        public static string connectionString = @"Data Source= ; ";
-        public static string connectionString = @" ";
-
+        public static string connectionString = @"Data Source= dev1.baist.ca; initial catalog=wcho2; User Id =wcho2; password=Whdnjsgur1!; ";
+ 
        
 
         #region CreateProgram
@@ -309,6 +308,11 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
         }
 
         #endregion
+
+
+       
+      
+
     }
 }
 

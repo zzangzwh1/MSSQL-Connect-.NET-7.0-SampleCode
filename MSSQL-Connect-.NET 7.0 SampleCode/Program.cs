@@ -87,16 +87,16 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
 
             #region Demonstraion-AddProgram
 
-            /*  bool isAddedProgram = Programs.AddProgram("BAIST8", "Thisis BAIST8");
+            bool isAddedProgram = Programs.AddProgram("BAIST8", "Thisis BAIST8");
 
-              if (isAddedProgram)
-              {
-                  Console.WriteLine("Successfully Program is Added");
-              }
-              else
-              {
-                  Console.WriteLine($"Failled! ");
-              }*/
+            if (isAddedProgram)
+            {
+                Console.WriteLine("Successfully Program is Added");
+            }
+            else
+            {
+                Console.WriteLine($"Failled! ");
+            }
 
             #endregion
 

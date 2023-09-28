@@ -167,6 +167,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
 
             #region NorthWind ---GetCustomersByCountry
             //Demonstrtion North Wind
+            Console.WriteLine("Sample Result for United Kingdom");
             Console.WriteLine("--------- GetCustomersByCountry --------");
             NorthWind.GetCustomersByCountry("UK");
 
@@ -175,11 +176,15 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
             Console.WriteLine("");
 
             #region NorthWind ---GetCategory
+            Console.WriteLine("Sample Result for Dairy Products");
             Console.WriteLine("--------- GetCategory --------");
             NorthWind.GetCategory(4);
             #endregion
 
+            #region Northwind- GetProductsByCategory
+            NorthWind.GetProductsByCategory("Dairy Products");
 
+            #endregion
             Console.ReadLine();
 
         }

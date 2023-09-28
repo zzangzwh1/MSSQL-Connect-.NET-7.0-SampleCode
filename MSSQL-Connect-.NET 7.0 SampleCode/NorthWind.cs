@@ -42,7 +42,15 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                             {
                                 for (int i = 0; i < reader.FieldCount; i++)
                                 {
-                                    Console.Write($"{reader[i]};");
+                                    if (reader[i].ToString() == null || reader[i].ToString() == "")
+                                    {
+                                        Console.Write("N/A;");
+                                    }
+                                    else
+                                    {
+                                        Console.Write($"{reader[i]};");
+
+                                    }
                                 }
                             }
                         }
@@ -73,7 +81,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                         if (reader.HasRows)
                         {
                             Console.WriteLine("Category Columns : ");
-                            for(int i =0; i <reader.FieldCount; i++)
+                            for (int i = 0; i < reader.FieldCount; i++)
                             {
                                 Console.Write($"{reader.GetName(i)};");
                             }
@@ -82,7 +90,7 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                             Console.WriteLine("Category Value : ");
                             while (reader.Read())
                             {
-                                for(int i =0; i<reader.FieldCount; i++)
+                                for (int i = 0; i < reader.FieldCount; i++)
                                 {
                                     Console.Write($"{reader[i]};");
                                 }
@@ -95,6 +103,49 @@ namespace MSSQL_Connect_.NET_7._0_SampleCode
                     }
                 }
 
+            }
+        }
+
+        #endregion
+
+        #region NorthWind wcho2.GetProductsByCategory
+
+        public static void GetProductsByCategory(string categoryName)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand("wcho2.GetProductsByCategory", conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@CategoryName", categoryName);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine("Product Columns : ");
+                            Console.WriteLine();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                Console.Write($"{reader.GetName(i)};");
+
+                            }
+                            Console.WriteLine();
+                            Console.WriteLine("-");
+                            Console.WriteLine("Product Values : ");
+                            while (reader.Read())
+                            {
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    Console.Write($"{reader[i]};");
+                                }
+                                Console.WriteLine();
+                            }
+                        }
+                    }
+                }
             }
         }
 
